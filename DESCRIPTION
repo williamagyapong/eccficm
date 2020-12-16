@@ -19,6 +19,8 @@ Description: Provides new distance correlation/covariance type of measures for
             testing independence between two random vectors, which uses the 
             expected difference of conditional and marginal characteristic 
             functions.
+URL: https://github.com/williamagyapong/ecdmeasures
+BugReports: https://github.com/williamagyapong/ecdmeasures/issues
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

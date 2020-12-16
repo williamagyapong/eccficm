@@ -1,0 +1,64 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# ecdmeasures
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of ecdmeasures is to provide new distance correlation/covariance type of measures for testing independence between two random vectors, which uses the expected difference of conditional and marginal characteristic functions.
+
+## Installation
+
+You can install the released version of ecdmeasures from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("ecdmeasures")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(ecdmeasures)
+library(MASS) # for the mvrnorm function
+ n=30
+ p=5
+ q=1
+ mu=rep(0,(p+q))
+ sigma=diag((p+q))
+ DATA=mvrnorm(n, mu, sigma)
+ X=DATA[,1:p]
+ Y=DATA[,(p+1):(p+q)]
+ # using slicing estimation method on a continuous Y
+ ecdcor.test(x = X, y = Y, method = "slice", B = "default", ns = 5)
+ # using Gaussian kernel estimation method
+ ecdcor.test(x = X, y = Y, method = "kernel.gau", B = "default")
+ # using Epanechnikov kernel estimation method
+ ecdcor.test(x = X, y = Y, method = "kernel.epa", B = "default")
+
+ #This example shows how to directly perform the test if Y is a categorical
+ #variable
+ library(boot)
+ #gravity data is in the boot package,there are 81 measurements in a series
+ # of eight experiments
+ #gravity$series shows the categories 1-8 of the observations. 999 permutations
+ # are used to compute p-value.
+str(gravity)
+ ecdcor.test(gravity$g, gravity$series, method="slice", B=999)
+```
+
+

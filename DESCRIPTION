@@ -1,0 +1,30 @@
+Package: ecdmeasures
+Title: Expectation of the Conditional Difference Measures for Testing Independence 
+Version: 0.0.0.9000
+Authors@R: c(
+    person(given = "William",
+           family = "Agyapong",
+           role = c("aut"),
+           email = "williamofosuagyapong@gmail.com"),
+    person(given = "Qinqcong",
+           family = "Yuan",
+           role = c("aut", "cre"),
+           email = "yuanq3@miamioh.edu"),
+    person(given = "Chenlu",
+           family = "Ke",
+           role = c("aut"),
+           email = "kec2@vcu.edu")
+           )
+Description: Provides new distance correlation/covariance type of measures for 
+            testing independence between two random vectors, which uses the 
+            expected difference of conditional and marginal characteristic 
+            functions.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Suggests:
+  energy,
+  MASS,
+  boot

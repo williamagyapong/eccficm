@@ -1,6 +1,7 @@
-Package: ecdmeasures
-Title: Expectation of the Conditional Difference Measures for Testing Independence 
-Version: 0.0.0.9000
+Package: eccficm 
+Title: Expected Conditional Characteristic Function-based Independence Criterion Measures for Testing Independence 
+Version: 1.0
+Date: 06/30/2021
 Authors@R: c(
     person(given = "William",
            family = "Agyapong",
@@ -15,18 +16,19 @@ Authors@R: c(
            role = c("aut"),
            email = "kec2@vcu.edu")
            )
-Description: Provides new distance correlation/covariance type of measures for 
+URL: https://github.com/williamagyapong/eccficm
+BugReports: https://github.com/williamagyapong/eccficm/issues
+Description: Provides new class of measures for 
             testing independence between two random vectors, which uses the 
             expected difference of conditional and marginal characteristic 
             functions.
-URL: https://github.com/williamagyapong/ecdmeasures
-BugReports: https://github.com/williamagyapong/ecdmeasures/issues
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Imports: Rdpack (>= 0.7)
+RdMacros: Rdpack
 Suggests:
-  energy,
   MASS,
   boot

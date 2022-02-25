@@ -1,28 +1,21 @@
 #----------------------------------------------------------------------------
-# The function depends on the kernel.fun() and mhatY() functions defined in the
-# helper section that follows to compute ECD measures for both the kernel method with Epanechnikov
-# kernel, and kernel method with Gaussian kernel
+# This function depends on the kern.fun() and mhat() functions defined in the
+# helper section that follows to compute ECD measures for both the kernel method
+# with Epanechnikov kernel, and kernel method with Gaussian kernel
 #____________________________________________________________________________
 
 # @title ECD kernel Estimation Methods
 # @description Implements ECD kernel estimation methods
-# @param x data of first sample serving as the response
-# @param y data of second sample conditioned on
-# @param method ECD estimation method (options:kernel.epa, kernel.gau)
-# @param bw bandwidth
-# @param index exponent on Euclidean distance, in (0,2]
+# @inheritparams ecd
 
 ecd.kernel <-
-function(x,y, method, bw="default", index=1.0){
+function(x,y, est="kernel.gau", bw="default", index=1.0){
   x <- as.matrix(x)
   y <- as.matrix(y)
   n <- nrow(x)
   m <- nrow(y)
   p <- ncol(x)
   q <- ncol(y)
-
-  # validate inputs
-  if(q>1)  stop("Sorry, this current implementation does not support a multivariate Y. Check out for updates.")
 
   if (n != m) stop("Sample sizes for x and y must agree")
 
@@ -35,14 +28,15 @@ function(x,y, method, bw="default", index=1.0){
   term1 <- sum(xdist)/(n^2)
 
   # computing Cn(X|X)
-  CnXX <- CnXY <- sqrt(term1) # a measure analogous to variance of X (not very sure)
+  CnXX <- CnXY <- sqrt(term1) # a measure analogous to variance of X
 
   if(!identical(x,y)) {
-    term2 <- as.numeric(mhatY(x,y, method, bw))
-    CnXY <- sqrt(term1 - term2) # Cn(X|Y), a measure analogous to covariance between X and Y (not very sure)
+    term2 <- as.numeric(mhat(x,y, est, bw, index)) # see mhat() at the end of this file
+    CnXY <- sqrt(abs(term1 - term2)) # Cn(X|Y), a measure analogous to covariance between X and Y
+    # print(term1-term2)
   }
 
-  rhoc <- CnXY/CnXX
+  rhoc <- CnXY/CnXX # this is the correlation type statistic
   return(list(ecdCov=CnXY, ecdCor=rhoc, ecdVarX=CnXX))
 }
 
@@ -50,37 +44,54 @@ function(x,y, method, bw="default", index=1.0){
 # Helper functions
 #__________________________________________________________
 
-kernel.fun <-
+# kernel function
+kern.fun <-
   function(t, type) {
     if(type=="kernel.epa") {
-
-      kernel <- ifelse(abs(t)<=sqrt(1), 3/4*(1-t^2), 0) # want to replace sqrt() by 1
+      ifelse(abs(t)<=1, 3/4*(1-t^2), 0)
     }else if(type=="kernel.gau") {
-      kernel <- 1/sqrt(2*pi)*exp(-1/2*t^2) # Gaussian kernel
+      1/sqrt(2*pi)*exp(-1/2*t^2) # Gaussian kernel
     } else {
-      stop("Type of kernel needs to be specified (kernel.epa for Epanechnikov kernel estimation or kernel.gau for Gaussian kernel estimation")
+      stop("kernel estimation method needs to be specified (kernel.epa for
+        Epanechnikov kernel estimation or kernel.gau for Gaussian kernel estimation")
     }
-    return(kernel)
   }
 
+# Estimating the second term
+mhat <-
+  function(x,y, est, bw,index){
 
-mhatY <-
-  function(x,y, method, bw){
     n <- nrow(x)
     sigma <- sd(y)
 
-    if(method=="kernel.epa") {
+    if(est=="kernel.epa") {
       bw <- ifelse(bw=="default", 1.5*sigma*n^(-1/(4+1/4)), bw)
-    } else if(method=="kernel.gau") {
+    } else if(est=="kernel.gau") {
       bw <- ifelse(bw=="default", 1.06*sigma*n^(-1/5), bw)
     }
 
-    mat1 <- matrix(rep(y,n),ncol=n)
-    mat2 <- (mat1-t(mat1))/bw
-    Kamat <- matrix(mapply(kernel.fun,as.vector(mat2), method),nrow=n,byrow=FALSE)
+    # mat1 <- matrix(rep(y,n),ncol=n)
+    # mat2 <- (mat1-t(mat1))/bw
+    # Kamat <- matrix(mapply(kern.fun,as.vector(mat2), est),nrow=n,byrow=FALSE)
+    Kamat <- kern.fun(as.matrix(dist(y))/bw, est) # this replaces lines 72 - 74 to accommodate multivariate Y
     Wa <- Kamat/(apply(Kamat,1,sum))
-    Gmat <- as.matrix(dist(x))
+    Gmat <- as.matrix(dist(x)^index)
     tmp <- Wa%*%Gmat%*%t(Wa)
     result <- sum(diag(tmp))/n # find the trace and divide by n
     return(result)
   }
+
+# profvis({
+#   n <- 30; p <- 5; q <- 1
+#   mu <- rep(0,(p+q))
+#   sigma <- diag((p+q))
+#   DATA <- mvrnorm(n, mu, sigma)
+#   X <- DATA[,1:p]
+#   Y <- DATA[,(p+1):(p+q)]
+#
+#    ecd.kernel(X,Y)
+# })
+
+
+
+

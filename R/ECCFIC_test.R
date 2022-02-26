@@ -107,8 +107,8 @@ function(x, y, est="kernel", ns=NULL,kernel="gaussian", B="default", ts="eccficC
   est.method <- paste("Estimation Method: ", ifelse(est=='slice', 'Slicing on Y', 'Kernel Regression'))
   test.method <- paste(ts," permutation test of independence - ", est.method)
   alternative <- "X is not independent of Y"
-  dataname <- ifelse((xname=="X")&(yname=="Y"), paste("X, Y, Replicates = ", B),
-                     paste("X -",xname, ", Y -", yname, ", Replicates = ", B))
+  dataname <- ifelse((xname=="X")&(yname=="Y"), paste("X, Y, Replicates =", B),
+                     paste("X ->",xname, ", Y ->", yname, ", Replicates =", B))
 
   # Put together all output elements
   output <- list(

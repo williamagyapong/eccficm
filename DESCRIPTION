@@ -22,7 +22,7 @@ Description: Provides new class of measures for
             testing independence between two random vectors, which uses the 
             expected difference of conditional and marginal characteristic 
             functions.
-License: GPL-3
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

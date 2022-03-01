@@ -1,6 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+\*\*NOTE: The package is not yet officially available for public use.
+Please do respect our wish by not installing the package until this note
+is removed. Thank you\!
+
 # eccficm: Expected Conditional Characteristic Function-based Independence Criterion Measures
 
 <!-- badges: start -->
@@ -29,6 +33,21 @@ based on ECD are either named “ecd” or prefixed by “ecd”, with the
 ECCFIC related R functions also named in a similar fashion.
 
 ## Installation
+
+Once the package becomes officially available, the following two options
+will be available for installation.
+
+### Installing development version
+
+You can install the development version of regexcite from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("williamagyapong/eccficm")
+```
+
+### Installing released version
 
 You can install the released version of `eccficm` from
 [CRAN](https://CRAN.R-project.org) with:

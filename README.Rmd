@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-**NOTE: The package is not yet officially available for public use. Please do respect our wish by not installing the package until this note is removed. Thank you!
+***NOTE: The package is not yet officially available for public use. Please do respect our wish by not installing the package until this note is removed. Thank you!***
 
 # eccficm: Expected Conditional Characteristic Function-based Independence Criterion Measures
 

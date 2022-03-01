@@ -1,9 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-\*\*NOTE: The package is not yet officially available for public use.
+***NOTE: The package is not yet officially available for public use.
 Please do respect our wish by not installing the package until this note
-is removed. Thank you\!
+is removed. Thank you\!***
 
 # eccficm: Expected Conditional Characteristic Function-based Independence Criterion Measures
 

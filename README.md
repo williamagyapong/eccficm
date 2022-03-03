@@ -39,7 +39,7 @@ will be available for installation.
 
 ### Installing development version
 
-You can install the development version of regexcite from
+You can install the development version of `eccficm` from
 [GitHub](https://github.com/) with:
 
 ``` r
